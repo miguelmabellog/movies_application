@@ -24,13 +24,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsrealestate.databinding.GridViewItemBinding
 import com.example.android.marsrealestate.network.MarsProperty
+import com.example.android.marsrealestate.network.MovieProperty
 
 /**
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  */
 class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
-        ListAdapter<MarsProperty,
+        ListAdapter<MovieProperty,
                 PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
 
     /**
@@ -39,7 +40,7 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
      */
     class MarsPropertyViewHolder(private var binding: GridViewItemBinding):
             RecyclerView.ViewHolder(binding.root) {
-        fun bind(marsProperty: MarsProperty) {
+        fun bind(marsProperty: MovieProperty) {
             binding.property = marsProperty
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
@@ -51,12 +52,12 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
      * Allows the RecyclerView to determine which items have changed when the [List] of [MarsProperty]
      * has been updated.
      */
-    companion object DiffCallback : DiffUtil.ItemCallback<MarsProperty>() {
-        override fun areItemsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<MovieProperty>() {
+        override fun areItemsTheSame(oldItem: MovieProperty, newItem: MovieProperty): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
+        override fun areContentsTheSame(oldItem: MovieProperty, newItem: MovieProperty): Boolean {
             return oldItem.id == newItem.id
         }
     }
@@ -85,8 +86,8 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
      * associated with the current item to the [onClick] function.
      * @param clickListener lambda that will be called with the current [MarsProperty]
      */
-    class OnClickListener(val clickListener: (marsProperty:MarsProperty) -> Unit) {
-        fun onClick(marsProperty:MarsProperty) = clickListener(marsProperty)
+    class OnClickListener(val clickListener: (marsProperty:MovieProperty) -> Unit) {
+        fun onClick(marsProperty:MovieProperty) = clickListener(marsProperty)
     }
 }
 
