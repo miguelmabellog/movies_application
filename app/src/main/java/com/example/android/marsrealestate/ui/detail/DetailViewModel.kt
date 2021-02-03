@@ -14,17 +14,16 @@
  *  limitations under the License.
  */
 
-package com.example.android.marsrealestate.detail
+package com.example.android.marsrealestate.ui.detail
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.android.marsrealestate.network.MarsProperty
-import com.example.android.marsrealestate.R
+import com.example.android.marsrealestate.network.NetworkMoviesContainer
 import com.example.android.marsrealestate.network.MovieProperty
 
 /**
  *  The [ViewModel] associated with the [DetailFragment], containing information about the selected
- *  [MarsProperty].
+ *  [NetworkMoviesContainer].
  */
 class DetailViewModel(marsProperty: MovieProperty,
                       app: Application) : AndroidViewModel(app) {

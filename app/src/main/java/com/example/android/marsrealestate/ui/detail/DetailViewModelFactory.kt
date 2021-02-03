@@ -14,12 +14,11 @@
  *  limitations under the License.
  */
 
-package com.example.android.marsrealestate.detail
+package com.example.android.marsrealestate.ui.detail
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.marsrealestate.network.MarsProperty
 import com.example.android.marsrealestate.network.MovieProperty
 
 /**

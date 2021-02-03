@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.example.android.marsrealestate.detail
+package com.example.android.marsrealestate.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

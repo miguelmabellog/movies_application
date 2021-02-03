@@ -15,7 +15,7 @@
  *
  */
 
-package com.example.android.marsrealestate.overview
+package com.example.android.marsrealestate.ui.overview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsrealestate.databinding.GridViewItemBinding
-import com.example.android.marsrealestate.network.MarsProperty
+import com.example.android.marsrealestate.network.NetworkMoviesContainer
 import com.example.android.marsrealestate.network.MovieProperty
 
 /**
@@ -36,7 +36,7 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
 
     /**
      * The MarsPropertyViewHolder constructor takes the binding variable from the associated
-     * GridViewItem, which nicely gives it access to the full [MarsProperty] information.
+     * GridViewItem, which nicely gives it access to the full [NetworkMoviesContainer] information.
      */
     class MarsPropertyViewHolder(private var binding: GridViewItemBinding):
             RecyclerView.ViewHolder(binding.root) {
@@ -49,7 +49,7 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
     }
 
     /**
-     * Allows the RecyclerView to determine which items have changed when the [List] of [MarsProperty]
+     * Allows the RecyclerView to determine which items have changed when the [List] of [NetworkMoviesContainer]
      * has been updated.
      */
     companion object DiffCallback : DiffUtil.ItemCallback<MovieProperty>() {
@@ -82,9 +82,9 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
     }
 
     /**
-     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [MarsProperty]
+     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [NetworkMoviesContainer]
      * associated with the current item to the [onClick] function.
-     * @param clickListener lambda that will be called with the current [MarsProperty]
+     * @param clickListener lambda that will be called with the current [NetworkMoviesContainer]
      */
     class OnClickListener(val clickListener: (marsProperty:MovieProperty) -> Unit) {
         fun onClick(marsProperty:MovieProperty) = clickListener(marsProperty)

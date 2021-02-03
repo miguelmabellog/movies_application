@@ -1,19 +1,23 @@
-package com.example.android.marsrealestate.overview
+package com.example.android.marsrealestate.ui.overview
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.android.marsrealestate.network.MarsApi
+import com.example.android.marsrealestate.network.MoviesApi
 import com.example.android.marsrealestate.network.MarsApiFilter
-import com.example.android.marsrealestate.network.MarsProperty
 import androidx.lifecycle.viewModelScope
+import com.example.android.marsrealestate.database.getDatabase
 import com.example.android.marsrealestate.network.MovieProperty
+import com.example.android.marsrealestate.repository.MoviesRepository
 import kotlinx.coroutines.launch
 
 enum class MarsApiStatus { LOADING, ERROR, DONE }
 
 
-class OverviewViewModel : ViewModel() {
+class OverviewViewModel (application: Application): ViewModel() {
+
+    private val videosRepository = MoviesRepository(getDatabase(application))
 
     private val _status = MutableLiveData<MarsApiStatus>()
 
@@ -37,9 +41,9 @@ class OverviewViewModel : ViewModel() {
         viewModelScope.launch {
             _status.value = MarsApiStatus.LOADING
             try {
-                val apiObject=MarsApi.retrofitService.getProperties()
-
-                _properties.value=apiObject.results
+                //val apiObject=MoviesApi.RETROFIT_SERVICE.getProperties()
+                val apiObject=videosRepository.refreshVideos()
+                _properties.value=apiObject
                 _status.value = MarsApiStatus.DONE
             } catch (e: Exception) {
                 _status.value = MarsApiStatus.ERROR
