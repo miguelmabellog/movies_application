@@ -25,7 +25,7 @@
         <import type="android.view.View"/>
         <variable
             name="property"
-            type="com.example.android.marsrealestate.network.MovieProperty"/>
+            type="com.example.android.marsrealestate.domain.ModelMovie"/>
     </data>
 
     <FrameLayout
@@ -39,7 +39,7 @@
             android:adjustViewBounds="true"
             android:padding="2dp"
             android:scaleType="centerCrop"
-            app:imageUrl="@{property.image.icon_url}"
+            app:imageUrl="@{property.image}"
             tools:src="@tools:sample/backgrounds/scenic"/>
 
         <!--<ImageView

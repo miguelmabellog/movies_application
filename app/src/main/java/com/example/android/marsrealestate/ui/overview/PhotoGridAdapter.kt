@@ -23,56 +23,39 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsrealestate.databinding.GridViewItemBinding
+import com.example.android.marsrealestate.domain.ModelMovie
 import com.example.android.marsrealestate.network.NetworkMoviesContainer
 import com.example.android.marsrealestate.network.MovieProperty
 
-/**
- * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
- * data, including computing diffs between lists.
- */
+
 class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
-        ListAdapter<MovieProperty,
+        ListAdapter<ModelMovie,
                 PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
 
-    /**
-     * The MarsPropertyViewHolder constructor takes the binding variable from the associated
-     * GridViewItem, which nicely gives it access to the full [NetworkMoviesContainer] information.
-     */
     class MarsPropertyViewHolder(private var binding: GridViewItemBinding):
             RecyclerView.ViewHolder(binding.root) {
-        fun bind(marsProperty: MovieProperty) {
+        fun bind(marsProperty: ModelMovie) {
             binding.property = marsProperty
-            // This is important, because it forces the data binding to execute immediately,
-            // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
         }
     }
-
-    /**
-     * Allows the RecyclerView to determine which items have changed when the [List] of [NetworkMoviesContainer]
-     * has been updated.
-     */
-    companion object DiffCallback : DiffUtil.ItemCallback<MovieProperty>() {
-        override fun areItemsTheSame(oldItem: MovieProperty, newItem: MovieProperty): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<ModelMovie>() {
+        override fun areItemsTheSame(oldItem: ModelMovie, newItem: ModelMovie): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: MovieProperty, newItem: MovieProperty): Boolean {
+        override fun areContentsTheSame(oldItem: ModelMovie, newItem: ModelMovie): Boolean {
             return oldItem.id == newItem.id
         }
     }
 
-    /**
-     * Create new [RecyclerView] item views (invoked by the layout manager)
-     */
+
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MarsPropertyViewHolder {
         return MarsPropertyViewHolder(GridViewItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    /**
-     * Replaces the contents of a view (invoked by the layout manager)
-     */
+
     override fun onBindViewHolder(holder: MarsPropertyViewHolder, position: Int) {
         val marsProperty = getItem(position)
         holder.itemView.setOnClickListener {
@@ -81,13 +64,9 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
         holder.bind(marsProperty)
     }
 
-    /**
-     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [NetworkMoviesContainer]
-     * associated with the current item to the [onClick] function.
-     * @param clickListener lambda that will be called with the current [NetworkMoviesContainer]
-     */
-    class OnClickListener(val clickListener: (marsProperty:MovieProperty) -> Unit) {
-        fun onClick(marsProperty:MovieProperty) = clickListener(marsProperty)
+
+    class OnClickListener(val clickListener: (marsProperty:ModelMovie) -> Unit) {
+        fun onClick(marsProperty:ModelMovie) = clickListener(marsProperty)
     }
 }
 

@@ -25,29 +25,33 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.marsrealestate.R
 import com.example.android.marsrealestate.databinding.FragmentOverviewBinding
+import com.example.android.marsrealestate.domain.ModelMovie
 import com.example.android.marsrealestate.network.MarsApiFilter
 
 
 class OverviewFragment : Fragment() {
 
     private val viewModel: OverviewViewModel by lazy {
-        ViewModelProvider(this).get(OverviewViewModel::class.java)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        ViewModelProvider(this, OverviewViewModel.Factory(activity.application))
+                .get(OverviewViewModel::class.java)
     }
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentOverviewBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
-            viewModel.displayPropertyDetails(it)
+
+        binding.photosGrid.adapter=PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+
         })
-        viewModel.navigateToSelectedProperty.observe(this, Observer {
-            if ( null != it ) {
-                this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
-                viewModel.displayPropertyDetailsComplete()
-            }
-        })
+
+
 
         setHasOptionsMenu(true)
         return binding.root
@@ -61,13 +65,13 @@ class OverviewFragment : Fragment() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        viewModel.updateFilter(
+        /*viewModel.updateFilter(
                 when (item.itemId) {
                     R.id.show_rent_menu -> MarsApiFilter.SHOW_RENT
                     R.id.show_buy_menu -> MarsApiFilter.SHOW_BUY
                     else -> MarsApiFilter.SHOW_ALL
                 }
-        )
+        )*/
         return true
     }
 }

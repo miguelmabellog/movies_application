@@ -1,66 +1,64 @@
 package com.example.android.marsrealestate.ui.overview
 
 import android.app.Application
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.*
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.android.marsrealestate.network.MoviesApi
 import com.example.android.marsrealestate.network.MarsApiFilter
-import androidx.lifecycle.viewModelScope
 import com.example.android.marsrealestate.database.getDatabase
 import com.example.android.marsrealestate.network.MovieProperty
 import com.example.android.marsrealestate.repository.MoviesRepository
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 enum class MarsApiStatus { LOADING, ERROR, DONE }
 
 
-class OverviewViewModel (application: Application): ViewModel() {
-
+class OverviewViewModel (application: Application): AndroidViewModel(application) {
     private val videosRepository = MoviesRepository(getDatabase(application))
 
-    private val _status = MutableLiveData<MarsApiStatus>()
+    val movieslist = videosRepository.movies
 
-    val status: LiveData<MarsApiStatus>
-        get() = _status
+    private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
-    private val _properties = MutableLiveData<List<MovieProperty>>()
+    val eventNetworkError: LiveData<Boolean>
+        get() = _eventNetworkError
 
-    val properties: LiveData<List<MovieProperty>>
-        get() = _properties
-
-    private val _navigateToSelectedProperty = MutableLiveData<MovieProperty>()
-    val navigateToSelectedProperty: LiveData<MovieProperty>
-        get() = _navigateToSelectedProperty
+    private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
+    val isNetworkErrorShown: LiveData<Boolean>
+        get() = _isNetworkErrorShown
 
     init {
-        getMarsRealEstateProperties(MarsApiFilter.SHOW_ALL)
+        refreshDataFromRepository()
     }
 
-    private fun getMarsRealEstateProperties(filter: MarsApiFilter) {
+    private fun refreshDataFromRepository() {
         viewModelScope.launch {
-            _status.value = MarsApiStatus.LOADING
             try {
-                //val apiObject=MoviesApi.RETROFIT_SERVICE.getProperties()
-                val apiObject=videosRepository.refreshVideos()
-                _properties.value=apiObject
-                _status.value = MarsApiStatus.DONE
-            } catch (e: Exception) {
-                _status.value = MarsApiStatus.ERROR
-                //_properties.value = ArrayList()
+                videosRepository.refreshVideos()
+                _eventNetworkError.value = false
+                _isNetworkErrorShown.value = false
+
+            } catch (networkError: IOException) {
+                // Show a Toast error message and hide the progress bar.
+                if(movieslist.value.isNullOrEmpty())
+                    _eventNetworkError.value = true
             }
         }
     }
 
-    fun updateFilter(filter: MarsApiFilter) {
-        getMarsRealEstateProperties(filter)
+    fun onNetworkErrorShown() {
+        _isNetworkErrorShown.value = true
     }
 
-    fun displayPropertyDetails(marsProperty: MovieProperty) {
-        _navigateToSelectedProperty.value = marsProperty
+    class Factory(val app: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(OverviewViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return OverviewViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
     }
 
-    fun displayPropertyDetailsComplete() {
-        _navigateToSelectedProperty.value = null
-    }
 }

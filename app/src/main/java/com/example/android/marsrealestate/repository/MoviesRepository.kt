@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 
 class MoviesRepository (private val database: MoviesDatabase) {
 
-    val videos: LiveData<List<ModelMovie>> = Transformations.map(database.moviesDao.getMovies()) {
+    val movies: LiveData<List<ModelMovie>> = Transformations.map(database.moviesDao.getMovies()) {
         it.asDomainModel()
     }
 
