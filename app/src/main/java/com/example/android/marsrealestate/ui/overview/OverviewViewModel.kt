@@ -40,7 +40,6 @@ class OverviewViewModel (application: Application): AndroidViewModel(application
                 _isNetworkErrorShown.value = false
 
             } catch (networkError: IOException) {
-                // Show a Toast error message and hide the progress bar.
                 if(movieslist.value.isNullOrEmpty())
                     _eventNetworkError.value = true
             }

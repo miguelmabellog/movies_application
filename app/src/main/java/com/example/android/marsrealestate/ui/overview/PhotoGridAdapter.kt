@@ -1,20 +1,3 @@
-/*
- * Copyright 2019, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-
 package com.example.android.marsrealestate.ui.overview
 
 import android.view.LayoutInflater
@@ -30,12 +13,12 @@ import com.example.android.marsrealestate.network.MovieProperty
 
 class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
         ListAdapter<ModelMovie,
-                PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
+                PhotoGridAdapter.ViewHolder>(DiffCallback) {
 
-    class MarsPropertyViewHolder(private var binding: GridViewItemBinding):
+    class ViewHolder(private var binding: GridViewItemBinding):
             RecyclerView.ViewHolder(binding.root) {
-        fun bind(marsProperty: ModelMovie) {
-            binding.property = marsProperty
+        fun bind(movie: ModelMovie) {
+            binding.property = movie
             binding.executePendingBindings()
         }
     }
@@ -51,22 +34,22 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): MarsPropertyViewHolder {
-        return MarsPropertyViewHolder(GridViewItemBinding.inflate(LayoutInflater.from(parent.context)))
+                                    viewType: Int): ViewHolder {
+        return ViewHolder(GridViewItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
 
-    override fun onBindViewHolder(holder: MarsPropertyViewHolder, position: Int) {
-        val marsProperty = getItem(position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val movie = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(marsProperty)
+            onClickListener.onClick(movie)
         }
-        holder.bind(marsProperty)
+        holder.bind(movie)
     }
 
 
-    class OnClickListener(val clickListener: (marsProperty:ModelMovie) -> Unit) {
-        fun onClick(marsProperty:ModelMovie) = clickListener(marsProperty)
+    class OnClickListener(val clickListener: (movie:ModelMovie) -> Unit) {
+        fun onClick(movie:ModelMovie) = clickListener(movie)
     }
 }
 
