@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="property"
-            type="com.example.android.marsrealestate.domain.ModelMovie"/>
+            type="com.example.android.moviesapp.domain.ModelMovie"/>
     </data>
 
     <FrameLayout

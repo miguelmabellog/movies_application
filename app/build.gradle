@@ -76,4 +76,7 @@ dependencies {
     def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    def version_work = "2.3.4"
+    implementation "android.arch.work:work-runtime-ktx:$version_work"
 }
