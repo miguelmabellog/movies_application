@@ -3,11 +3,12 @@ package com.example.android.marsrealestate.ui.detail
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.android.marsrealestate.domain.ModelMovie
 import com.example.android.marsrealestate.network.MovieProperty
 
 
 class DetailViewModelFactory(
-        private val marsProperty: MovieProperty,
+        private val marsProperty: ModelMovie,
         private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

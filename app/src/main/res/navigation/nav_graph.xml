@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="selectedProperty"
-            app:argType="com.example.android.marsrealestate.network.MovieProperty"
+            app:argType="com.example.android.marsrealestate.domain.ModelMovie"
             />
     </fragment>
 

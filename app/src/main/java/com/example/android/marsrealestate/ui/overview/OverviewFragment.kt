@@ -31,7 +31,14 @@ class OverviewFragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.photosGrid.adapter=PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+            viewModel.displayPropertyDetails(it)
+        })
 
+        viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
+            if ( null != it ) {
+                this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
+                viewModel.displayPropertyDetailsComplete()
+            }
         })
 
 

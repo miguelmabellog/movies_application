@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.android.marsrealestate.network.MoviesApi
 import com.example.android.marsrealestate.network.MarsApiFilter
 import com.example.android.marsrealestate.database.getDatabase
+import com.example.android.marsrealestate.domain.ModelMovie
 import com.example.android.marsrealestate.network.MovieProperty
 import com.example.android.marsrealestate.repository.MoviesRepository
 import kotlinx.coroutines.launch
@@ -28,6 +29,12 @@ class OverviewViewModel (application: Application): AndroidViewModel(application
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+    private val _navigateToSelectedProperty = MutableLiveData<ModelMovie>()
+
+    val navigateToSelectedProperty: LiveData<ModelMovie>
+        get() = _navigateToSelectedProperty
+
+
     init {
         refreshDataFromRepository()
     }
@@ -48,6 +55,14 @@ class OverviewViewModel (application: Application): AndroidViewModel(application
 
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
+    }
+
+    fun displayPropertyDetails(movie: ModelMovie) {
+        _navigateToSelectedProperty.value = movie
+    }
+
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
