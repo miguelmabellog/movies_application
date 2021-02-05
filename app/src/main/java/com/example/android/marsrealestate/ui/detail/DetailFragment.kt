@@ -24,8 +24,6 @@ class DetailFragment : Fragment() {
                 this, viewModelFactory).get(DetailViewModel::class.java)
         binding.viewModel=viewmodel
 
-        //val mHtmlString=viewmodel.selectedProperty.value?.description
-        //binding.priceValueText.setText((Html.fromHtml(Html.fromHtml(mHtmlString).toString())))
 
         return binding.root
     }
