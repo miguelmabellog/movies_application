@@ -8,12 +8,12 @@ import com.example.android.marsrealestate.network.MovieProperty
 
 
 class DetailViewModelFactory(
-        private val marsProperty: ModelMovie,
+        private val movie: ModelMovie,
         private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
-            return DetailViewModel(marsProperty, application) as T
+            return DetailViewModel(movie, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
