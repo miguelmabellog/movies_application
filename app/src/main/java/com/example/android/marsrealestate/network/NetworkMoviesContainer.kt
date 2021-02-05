@@ -21,14 +21,14 @@ data class MovieProperty (val id:Int,
                           val image:@RawValue ImageProperty,
                           val name:String) : Parcelable
 
-data class ImageProperty (val icon_url:String)
+data class ImageProperty (val medium_url:String)
 
 fun NetworkMoviesContainer.asDatabaseModel(): List<DatabaseMovies> {
         return results.map {
                 DatabaseMovies(
                         id = it.id,
                         description = it.description,
-                        image = it.image.icon_url,
+                        image = it.image.medium_url,
                         name = it.name)
         }
 }

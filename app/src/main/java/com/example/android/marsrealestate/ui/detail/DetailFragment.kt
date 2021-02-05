@@ -1,6 +1,7 @@
 package com.example.android.marsrealestate.ui.detail
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +20,12 @@ class DetailFragment : Fragment() {
 
         val movie = DetailFragmentArgs.fromBundle(arguments!!).selectedProperty
         val viewModelFactory = DetailViewModelFactory(movie, application)
-        binding.viewModel = ViewModelProvider(
+        val  viewmodel= ViewModelProvider(
                 this, viewModelFactory).get(DetailViewModel::class.java)
+        binding.viewModel=viewmodel
+
+        //val mHtmlString=viewmodel.selectedProperty.value?.description
+        //binding.priceValueText.setText((Html.fromHtml(Html.fromHtml(mHtmlString).toString())))
 
         return binding.root
     }
