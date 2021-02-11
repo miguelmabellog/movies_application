@@ -10,6 +10,7 @@ Esta aplicación permite ver un catalogo de peliculas de superheroes, para esto 
 MVVM: arquitectura. <br />
 Room: Base de datos local. <br />
 Retrofit: Conexion a servio REST. <br />
+Corutines: corutinas para manejar ejecucion de codigo asincrono.<br />
 WorkManager: Servicio de proceso backgraound para actualizar la base de datos. <br />
 Navigation: navegacion entre fragments. <br />
 DataBinding: Union entre componentes layout y controladores. <br />
